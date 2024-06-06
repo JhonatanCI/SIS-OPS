@@ -31,9 +31,17 @@ if [ $option -eq 3 ]; then
     echo
 fi
 
-echo "Memoria libre y espacio de swap en uso:"
-free -b | awk '/Mem:/ {mem_free=$4; mem_total=$2} /Swap:/ {swap_used=$3; swap_total=$2; swap_percent = (swap_used/swap_total) * 100} END {printf "Memoria libre: %d bytes\n", mem_free; printf "Swap en uso: %d bytes (%.2f%%)\n", swap_used, swap_percent}'
-echo
+if [ $option -eq 4 ]; then
+ 
+ echo "Memoria libre y espacio de swap en uso:"
+ free -b | awk '/Mem:/ {mem_free=$4; mem_total=$2} /Swap:/ {swap_used=$3; swap_total=$2; swap_percent = (swap_used/swap_total) * 100} END {printf "Memoria libre: %d bytes\n", mem_free; printf "Swap en uso: %d bytes (%.2f%%)\n", swap_used, swap_percent}'
+ echo
 
-echo "Número de conexiones de red activas (ESTABLISHED):"
-netstat -an | awk '/ESTABLISHED/ {count++} END {print count}'
+fi
+
+if [ $option -eq 5 ]; then
+
+ echo "Numero de conexiones de red activas:"
+ netstat -an | awk '$6 == "CONNECTED" {count++} END {print count}'
+
+fi
